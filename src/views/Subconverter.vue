@@ -78,19 +78,23 @@
                     </el-col>
                     <el-popover placement="bottom" v-model="form.extraset">
                       <el-row :gutter="10">
-                        <el-col :span="12"><el-checkbox v-model="form.emoji" label="启用Emoji"></el-checkbox></el-col>
-			<el-col :span="12"><el-checkbox v-model="form.udp" @change="needUdp = true" label="启用UDP"></el-checkbox></el-col>
+                        <el-col :span="12"><el-checkbox v-model="form.insert" label="插入默认节点"></el-checkbox></el-col>
+                        <el-col :span="12"><el-checkbox v-model="form.surgeForce" label="Surge强制更新"></el-checkbox></el-col>
                       </el-row>
                       <el-row :gutter="10">
-                        <el-col :span="12"><el-checkbox v-model="form.sort" label="排序节点"></el-checkbox></el-col>
+                        <el-col :span="12"><el-checkbox v-model="form.udp" label="启用UDP"></el-checkbox></el-col>
+                        <el-col :span="12"><el-checkbox v-model="form.tls13" label="开启TLS_1.3"></el-checkbox></el-col>
+                      </el-row>
+                      <el-row :gutter="10">
                         <el-col :span="12"><el-checkbox v-model="form.tfo" label="启用TFO"></el-checkbox></el-col>
+                        <el-col :span="12"><el-checkbox v-model="form.sort" label="节点排序"></el-checkbox></el-col>
                       </el-row>
                       <el-row :gutter="10">
                         <el-col :span="12"><el-checkbox v-model="form.appendType" label="插入节点类型"></el-checkbox></el-col>
-			<el-col :span="12"><el-checkbox v-model="form.scv" label="绕过TLS验证"></el-checkbox></el-col>
+                        <el-col :span="12"><el-checkbox v-model="form.scv" label="绕过TLS验证"></el-checkbox></el-col>
                       </el-row>
                       <el-row :gutter="10">
-			<el-col :span="12"><el-checkbox v-model="form.expand" label="展开规则全文"></el-checkbox></el-col>
+                        <el-col :span="12"><el-checkbox v-model="form.expand" label="展开规则全文"></el-checkbox></el-col>
                         <el-col :span="12"><el-checkbox v-model="form.fdn" label="过滤不支持节点"></el-checkbox></el-col>
                       </el-row>
                       <el-button slot="reference">更多选项</el-button>
@@ -554,9 +558,10 @@ export default {
         excludeRemarks: "",
         includeRemarks: "",
         filename: "",
-        emoji: true,
         nodeList: false,
         extraset: false,
+        tls13: false,
+        surgeForce: false,
         sort: false,
         udp: false,
         tfo: false,
@@ -570,16 +575,13 @@ export default {
       loading: false,
       customSubUrl: "",
       curtomShortSubUrl: "",
-
       dialogUploadConfigVisible: false,
       loadConfig: "",
       dialogLoadConfigVisible: false,
       uploadConfig: "",
       uploadPassword: "",
       myBot: tgBotLink,
-      sampleConfig: remoteConfigSample,
-
-      needUdp: false, // 是否需要添加 udp 参数
+      sampleConfig: remoteConfigSample
     };
 
     let phoneUserAgent = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -613,7 +615,7 @@ export default {
     this.notify();
     this.form.clientType = "clash";
     this.form.customBackend = defaultBackend;
-    this.form.remoteConfig = "https://raw.githubusercontent.com/d2184/rules/main/configs/LAZY_RULES.yml";
+    this.form.remoteConfig = "https://raw.githubusercontent.com/d2184/rules/main/configs/LAZY_RULES.toml";
     this.getBackendVersion();
   },
   methods: {
@@ -624,7 +626,7 @@ export default {
         position: 'top-right',
         customClass: 'msgbox',
         message: (
-          "本站已支持对VLESS的转换, 如需请切换至对应后端使用! "
+          "本站已支持对VLESS/XTLS的转换, 如需请切换至对应后端使用! "
         )
       });
     },
@@ -729,26 +731,30 @@ export default {
           this.customSubUrl +=
             "&append_type=" + this.form.appendType.toString();
         }
+        if (this.form.tls13) {
+          this.customSubUrl +=
+            "&tls13=" + this.form.tls13.toString();
+        }
+        if (this.form.surgeForce) {
+          this.customSubUrl +=
+            "&strict=" + this.form.surgeForce.toString();
+        }
 
         this.customSubUrl +=
-          "&emoji=" +
-          this.form.emoji.toString() +
           "&list=" +
           this.form.nodeList.toString() +
-          "&tfo=" +
-          this.form.tfo.toString() +
-          "&scv=" +
-          this.form.scv.toString() +
-          "&fdn=" +
-          this.form.fdn.toString() +
+          "&udp=" +
+          this.form.udp.toString() +
           "&sort=" +
           this.form.sort.toString() +
+          "&scv=" +
+          this.form.scv.toString() +
+          "&tfo=" +
+          this.form.tfo.toString() +
+          "&fdn=" +
+          this.form.fdn.toString() +
           "&expand=" +
           this.form.expand.toString();
-
-        if (this.needUdp) {
-          this.customSubUrl += "&udp=" + this.form.udp.toString()
-        }
       }
 
       this.$copyText(this.customSubUrl);
@@ -876,8 +882,11 @@ export default {
       if (param.get("append_type")){
         this.form.appendType = param.get("append_type") === 'true';
       }
-      if (param.get("emoji")){
-        this.form.emoji = param.get("emoji") === 'true';
+      if (param.get("tls13")){
+        this.form.tls13 = param.get("tls13");
+      }
+      if (param.get("strict")){
+        this.form.surgeForce = param.get("strict");
       }
       if (param.get("list")){
         this.form.nodeList = param.get("list") === 'true';
@@ -896,15 +905,6 @@ export default {
       }
       if (param.get("udp")){
         this.form.udp = param.get("udp") === 'true';
-      }
-      if (param.get("surge.doh")){
-        this.form.tpl.surge.doh = param.get("surge.doh") === 'true';
-      }
-      if (param.get("clash.doh")){
-        this.form.tpl.clash.doh = param.get("clash.doh") === 'true';
-      }
-      if (param.get("new_name")){
-        this.form.new_name = param.get("new_name") === 'true';
       }
       this.dialogLoadConfigVisible = false;
     },
