@@ -309,12 +309,8 @@ export default {
             label: "默认",
             options: [
               {
-                label: "默认",
-                value: "https://raw.githubusercontent.com/hope140/Clash/beta/All.yaml"
-              },
-              {
-                label: "默认(附带用于 Clash 的 AdGuard DNS)",
-                value: "https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/default_with_clash_adg.yml"
+                label: "不选，由接口提供方提供",
+                value: ""
               }
             ]
           },
@@ -494,7 +490,7 @@ export default {
                 value: "https://raw.githubusercontent.com/SleepyHeeead/subconverter-config/master/remote-config/customized/maying.ini"
               },
               {
-                label: "ARK（魅影分站）",
+                label: "ARK (魅影分站)",
                 value: "https://raw.githubusercontent.com/SleepyHeeead/subconverter-config/master/remote-config/customized/ark.ini"
               },
               {
@@ -524,6 +520,16 @@ export default {
                 label: "BigAirport",
                 value:
                   "https://gist.github.com/jklolixxs/e2b0105c8be6023f3941816509a4c453/raw/BigAirport.ini"
+              },
+              {
+                label: "LinkCube",
+                value:
+                    "https://subweb.s3.fr-par.scw.cloud/RemoteConfig/customized/convenience.ini"
+              },
+              {
+                label: "Miaona",
+                value:
+                    "https://gist.github.com/jklolixxs/ff8ddbf2526cafa568d064006a7008e7/raw/Miaona.ini"
               }
             ]
           },
