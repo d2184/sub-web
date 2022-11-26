@@ -68,7 +68,10 @@
                 <el-form-item label="排除节点:">
                   <el-input v-model="form.excludeRemarks" placeholder="节点名不包含的关键字，支持正则" />
                 </el-form-item>
-                <el-form-item label="输出文件名:">
+                <el-form-item label="节点命名:">
+                  <el-input v-model="form.rename" placeholder="举例：`a@b``1@2`，|符可用\转义" />
+                </el-form-item>
+                <el-form-item label="订阅命名:">
                   <el-input v-model="form.filename" placeholder="返回的订阅文件名" />
                 </el-form-item>
                 <el-form-item label-width="0px">
@@ -564,6 +567,7 @@ export default {
         excludeRemarks: "",
         includeRemarks: "",
         filename: "",
+        rename: "",
         nodeList: false,
         extraset: false,
         tls13: false,
@@ -733,6 +737,10 @@ export default {
           this.customSubUrl +=
             "&filename=" + encodeURIComponent(this.form.filename);
         }
+        if (this.form.rename !== "") {
+          this.customSubUrl +=
+            "&rename=" + encodeURIComponent(this.form.rename);
+        }
         if (this.form.appendType) {
           this.customSubUrl +=
             "&append_type=" + this.form.appendType.toString();
@@ -884,6 +892,9 @@ export default {
       }
       if (param.get("filename")){
         this.form.filename = param.get("filename");
+      }
+      if (param.get("rename")){
+        this.form.rename = param.get("rename");
       }
       if (param.get("append_type")){
         this.form.appendType = param.get("append_type") === 'true';
