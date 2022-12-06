@@ -6,7 +6,7 @@
           <div slot="header">
             订阅转换
             <svg-icon icon-class="github" style="margin-left: 20px" @click="goToProject" />
-            <svg-icon icon-class="telegram" style="margin-left: 20px" @click="gotoTgChannel" />
+            <svg-icon icon-class="telegram" style="margin-left: 20px" @click="gotoTgBot" />
             <div style="display: inline-block; position:absolute; right: 20px">{{ backendVersion }}</div>
           </div>
           <el-container>
@@ -145,7 +145,6 @@
                   :loading="loading"
                   :disabled="customSubUrl.length === 0"
                 >生成短链接</el-button>
-                <!-- <el-button style="width: 120px" type="primary" @click="surgeInstall" icon="el-icon-connection">一键导入Surge</el-button> -->
               </el-form-item>
               <el-form-item label-width="0px" style="text-align: center">
                 <el-button
@@ -280,7 +279,7 @@ export default {
           "sub作者提供-稳定":
             "https://sub.xeton.dev/sub?",
           "d2184 后端【私人】": "https://api.gracy.tk/sub?",
-          "墙洞后端": "https://api.dler.io/sub?",
+          "墙洞机场转换后端": "https://api.dler.io/sub?",
           "つつ提供-香港CN2稳定": "https://api.tsutsu.cc/sub?",
           "つつ-多地防失联【负载均衡+国内优化】": "https://api.tsutsu.one/sub?",
           "nameless13提供":"https://www.nameless13.com/sub?",
@@ -592,10 +591,10 @@ export default {
       customSubUrl: "",
       curtomShortSubUrl: "",
       dialogUploadConfigVisible: false,
-      loadConfig: "",
-      dialogLoadConfigVisible: false,
       uploadConfig: "",
       uploadPassword: "",
+      dialogLoadConfigVisible: false,
+      loadConfig: "",
       myBot: tgBotLink,
       sampleConfig: remoteConfigSample
     };
@@ -631,7 +630,7 @@ export default {
     this.notify();
     this.form.clientType = "clash";
     this.form.customBackend = defaultBackend;
-    this.form.remoteConfig = "https://raw.githubusercontent.com/d2184/rules/main/configs/LAZY_RULES.toml";
+    this.form.remoteConfig = "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini";
     this.getBackendVersion();
   },
   methods: {
@@ -642,7 +641,7 @@ export default {
         position: 'top-right',
         customClass: 'msgbox',
         message: (
-          "本站已支持对VLESS/XTLS的转换, 如需请切换至对应后端使用! "
+          "本站已支持对vless/xtls的转换, 如需使用请自行切换至对应后端! "
         )
       });
     },
@@ -652,7 +651,7 @@ export default {
     goToProject() {
       window.open(project);
     },
-	gotoTgChannel() {
+    gotoTgBot() {
       window.open(tgBotLink);
     },
     gotoGayhub() {
@@ -676,15 +675,6 @@ export default {
               : this.customSubUrl
           )
       );
-    },
-    surgeInstall() {
-      if (this.customSubUrl === "") {
-        this.$message.error("请先填写必填项，生成订阅链接");
-        return false;
-      }
-
-      const url = "surge://install-config?url=";
-      window.open(url + this.customSubUrl);
     },
     makeUrl() {
       if (this.form.sourceSubUrl === "" || this.form.clientType === "") {
