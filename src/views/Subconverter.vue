@@ -266,11 +266,17 @@ export default {
       options: {
         clientTypes: {
           Clash: "clash",
-          Surfboard: "surfboard",
           Surge3: "surge&ver=3",
           Surge4: "surge&ver=4",
           Loon: "loon",
           Mellow: "mellow",
+          Surfboard: "surfboard",
+          "Shadowsocks(SIP002)": "ss",
+          "Shadowsocks Android(SIP008)": "sssub",
+          ShadowsocksR: "ssr",
+          ShadowsocksD: "ssd",          
+          V2Ray: "v2ray",
+          Trojan: "trojan",
           "Quantumult X" : "quanx",
           "通用订阅(mixed)": "mixed",
         },
@@ -278,7 +284,7 @@ export default {
           "localhost 本地版": "http://localhost:25500/sub?",
           "sub作者提供-稳定":
             "https://sub.xeton.dev/sub?",
-          "d2184 后端【私人】": "https://api.gracy.tk/sub?",
+          "d2184 后端【vless,私人】": "https://apis.gracy.tk/sub?",
           "墙洞机场转换后端": "https://api.dler.io/sub?",
           "つつ提供-香港CN2稳定": "https://api.tsutsu.cc/sub?",
           "つつ-多地防失联【负载均衡+国内优化】": "https://api.tsutsu.one/sub?",
@@ -292,7 +298,7 @@ export default {
         backendOptions: [
           { value: "http://localhost:25500/sub?" },
           { value: "https://sub.xeton.dev/sub?" },
-          { value: "https://api.gracy.tk/sub?" },
+          { value: "https://apis.gracy.tk/sub?" },
           { value: "https://api.dler.io/sub?" },
           { value: "https://api.tsutsu.cc/sub?" },
           {value: "https://api.tsutsu.one/sub?"},
@@ -578,7 +584,7 @@ export default {
         tls13: false,
         surgeForce: false,
         sort: false,
-        udp: false,
+        udp: true,
         tfo: false,
         scv: false,
         expand: true, // 是否将规则全文写进配置文件
