@@ -203,9 +203,8 @@ export default {
         },
         customBackend: {
           "localhost 本地版": "http://localhost:25500/sub?",
-          "sub作者提供-稳定":
-            "https://sub.xeton.dev/sub?",
-          "d2184 后端【vless,私人】": "https://apis.gracy.tk/sub?",
+          "sub作者提供-稳定": "https://sub.xeton.dev/sub?",
+          "d2184 后端【私人】": "https://api.gracy.tk/sub?",
           "墙洞机场转换后端": "https://api.dler.io/sub?",
           "つつ提供-香港CN2稳定": "https://api.tsutsu.cc/sub?",
           "つつ-多地防失联【负载均衡+国内优化】": "https://api.tsutsu.one/sub?",
@@ -219,7 +218,7 @@ export default {
         backendOptions: [
           { value: "http://localhost:25500/sub?" },
           { value: "https://sub.xeton.dev/sub?" },
-          { value: "https://apis.gracy.tk/sub?" },
+          { value: "https://api.gracy.tk/sub?" },
           { value: "https://api.dler.io/sub?" },
           { value: "https://api.tsutsu.cc/sub?" },
           {value: "https://api.tsutsu.one/sub?"},
@@ -557,7 +556,7 @@ export default {
     this.notify();
     this.form.clientType = "clash";
     this.form.customBackend = defaultBackend;
-    this.form.remoteConfig = "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini";
+    this.form.remoteConfig = remoteConfigSample;
     this.getBackendVersion();
   },
   methods: {
