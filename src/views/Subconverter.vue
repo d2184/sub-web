@@ -187,6 +187,7 @@ export default {
       options: {
         clientTypes: {
           Clash: "clash",
+          "sing-box": "sing-box",
           Surge3: "surge&ver=3",
           Surge4: "surge&ver=4",
           Loon: "loon",
@@ -204,7 +205,7 @@ export default {
         customBackend: {
           "localhost 本地版": "http://localhost:25500/sub?",
           "sub作者提供-稳定": "https://sub.xeton.dev/sub?",
-          "d2184 后端【私人】": "https://api.gracy.tk/sub?",
+          "d2184 后端【私人, sing-box】": "https://api.gracy.tk/sub?",
           "墙洞机场转换后端": "https://api.dler.io/sub?",
           "つつ提供-香港CN2稳定": "https://api.tsutsu.cc/sub?",
           "つつ-多地防失联【负载均衡+国内优化】": "https://api.tsutsu.one/sub?",
@@ -567,7 +568,7 @@ export default {
         position: 'top-right',
         customClass: 'msgbox',
         message: (
-          "本站已支持对vless/xtls的转换, 如需使用请自行切换至对应后端! "
+          "本站已支持对xtls/sing-box的转换, 如需使用请自行切换至对应后端! "
         )
       });
     },
